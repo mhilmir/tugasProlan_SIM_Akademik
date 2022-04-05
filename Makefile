@@ -7,3 +7,7 @@ src/%.o: src/%.cpp
 
 sim: $(SOURCES:.cpp=.o)
 	$(CXX) $(CXXFLAGS) -o $@ $^
+
+clean:
+	rm src/*.o
+	rm sim
