@@ -14,6 +14,36 @@ mahasiswa::mahasiswa(std::string id, std::string nama, int dd, int mm, int yy,
 	this->ips = std::vector<float>(14,0);
 }
 
+void mahasiswa::setNRP(std::string nrp)
+{
+    this->nrp = nrp;
+}
+
+std::string mahasiswa::getNRP()
+{
+    return this->nrp;
+}
+
+void mahasiswa::setDepartemen(std::string departemen)
+{
+    this->departemen = departemen;
+}
+
+std::string mahasiswa::getDepartemen()
+{
+    return this->departemen;
+}
+
+void mahasiswa::setTahunmasuk(int tahunmasuk)
+{
+    this->tahunmasuk = tahunmasuk;
+}
+
+int mahasiswa::getTahunmasuk()
+{
+    return this->tahunmasuk;
+}
+
 void mahasiswa::setSemester(int semesterke)
 {
 	this->semesterke = semesterke;

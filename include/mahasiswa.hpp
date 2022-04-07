@@ -19,6 +19,15 @@ public:
 	mahasiswa(std::string id, std::string nama, int dd, int mm, int yy,
 					std::string nrp, std::string departemen, int tahunmasuk);
 
+    void setNRP(std::string nrp);
+    std::string getNRP();
+
+    void setDepartemen(std::string departemen);
+    std::string getDepartemen();
+
+    void setTahunmasuk(int tahunmasuk);
+    int getTahunmasuk();
+
 	void setSemester(int semesterke);
 	int getSemester();
 

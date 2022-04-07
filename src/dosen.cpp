@@ -8,6 +8,26 @@ dosen::dosen(std::string id, std::string nama, int dd, int mm, int yy, std::stri
 {
 }
 
+void dosen::setNPP(std::string npp)
+{
+    this->npp = npp;
+}
+
+std::string dosen::getNPP()
+{
+    return this->npp;
+}
+
+void dosen::setDepartemen(std::string departemen)
+{
+    this->departemen = departemen;
+}
+
+std::string dosen::getDepartemen()
+{
+    return this->departemen;
+}
+
 void dosen::setPendidikan(std::string pendidikan)
 {
 	this->pendidikan = pendidikan;
