@@ -83,7 +83,7 @@ int main()
                 cin.ignore();
                 getline(cin, departemen);
                 cout << "masukkan pendidikan : ";
-                cin.ignore();
+                // cin.ignore();
                 getline(cin, pendidikan);
                 dosen inputDosen = dosen(id, nama, dd, mm, yy, npp, departemen, pendidikan);
                 recDosen.push_back(inputDosen);
@@ -166,19 +166,6 @@ int main()
 
 	return 0;
 }
-
-
-
-/* 
-    vector <int> recMhs;
-    recMhs.push_back(5);
-    recMhs.push_back(9);
-    recMhs = {5, 9};
-
-
-*/
-
-
 
 
 
