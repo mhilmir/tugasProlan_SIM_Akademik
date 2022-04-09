@@ -66,6 +66,12 @@ int mahasiswa::getSKSLulus()
 
 void mahasiswa::hitungIPK()
 {
+    float total = 0;
+    for(long unsigned int i = 0; i < ips.size(); i++){
+        total += ips[i];
+    }
+    total /= (this->getSemester()-1);
+    this->ipk = total;
 }
 
 void mahasiswa::setIPS(int semester, float ips)
@@ -90,5 +96,8 @@ std::vector<float> mahasiswa::getAllIPS()
 	return this->ips;
 }
 
-
+float mahasiswa::getIPK()
+{
+    return this->ipk;
+}
 

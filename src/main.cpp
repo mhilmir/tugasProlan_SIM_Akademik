@@ -18,9 +18,10 @@ int main()
     int idMhs = 0;
     int idDosen = 0;
     int idTendik = 0;
-    char lanjutKah;
+    char lanjutKah, tunjukinIPS;
 
 	while(1) {
+        system("clear");
 		cout << "Selamat datang di Universitas X" << endl << endl;
 		cout << "Data statistik:" << endl;
 		cout << "  1. Jumlah Mahasiswa             : " << recMhs.size() << " mahasiswa" << endl;
@@ -40,9 +41,12 @@ int main()
 		switch (menu_terpilih) {
 			case 1:{
                 idMhs++;
-                string id, nama, nrp, departemen;
-                int dd, mm, yy, tahunmasuk;
+                string id, nama, nrp, departemen, stringIPS;
+                int dd, mm, yy, tahunmasuk, semesterke, skslulus;
+                float ips_container;
+                vector <float> ips;
                 id = "mhs" + to_string(idMhs);
+                system("clear");
                 cout << "masukkan nama mahasiswa : ";
                 cin.ignore();
                 getline(cin, nama);
@@ -59,7 +63,21 @@ int main()
                 getline(cin, departemen);
                 cout << "masukkan tahun masuk : ";
                 cin >> tahunmasuk;
+                cout << "masukkan semester ke berapa sekarang : ";
+                cin >> semesterke;
+                cout << "masukkan jumlah sks lulus : ";
+                cin >> skslulus;
+                for(int i = 1 ; i < semesterke; i++){
+                    cout << "masukkan ips semester ke-" << i << " : ";
+                    cin >> ips_container;
+                    ips.push_back(ips_container);
+                }
                 mahasiswa inputMhs = mahasiswa(id, nama, dd, mm, yy, nrp, departemen, tahunmasuk);
+                inputMhs.setSemester(semesterke);
+                inputMhs.setSKSLulus(skslulus);
+                for(int i = 1; i < semesterke; i++){
+                    inputMhs.setIPS(i, ips[i-1]);
+                }
                 recMhs.push_back(inputMhs);
             }   break;
 
@@ -68,6 +86,7 @@ int main()
                 string id, nama, npp, departemen, pendidikan;
                 int dd, mm, yy;
                 id = "dsn" + to_string(idDosen);
+                system("clear");
                 cout << "masukkan nama dosen : ";
                 cin.ignore();
                 getline(cin, nama);
@@ -94,6 +113,7 @@ int main()
                 string id, nama, npp, unit;
                 int dd, mm, yy;
                 id = "tdk" + to_string(idTendik);
+                system("clear");
                 cout << "masukkan nama tendik : ";
                 cin.ignore();
                 getline(cin, nama);
@@ -113,19 +133,44 @@ int main()
             }   break;
 
 			case 4:{
+                system("clear");
+                label2:
+                cout << "apakah anda ingin melihat rincian ip per semester (IPS) juga (y/n): ";
+                cin >> tunjukinIPS;
+                if(tunjukinIPS != 'y' && tunjukinIPS != 'Y' && tunjukinIPS != 'n' && tunjukinIPS != 'N'){
+                    cout << "input salah" << endl;
+                    goto label2;
+                }
                 for(int i = 0; i < idMhs; i++){
                     cout << i+1 << ". data mahasiswa dengan id: " << recMhs[i].getId() << endl;
                     cout << "\tNama        : " << recMhs[i].getNama() << endl;
                     cout << "\tdd/mm/yy    : " << recMhs[i].getTglLahir() << "/" << recMhs[i].getBulanLahir() << "/" << recMhs[i].getTahunLahir() << endl;
                     cout << "\tNRP         : " << recMhs[i].getNRP() << endl;
                     cout << "\tDepartemen  : " << recMhs[i].getDepartemen() << endl;
-                    cout << "\tTahun Masuk : " << recMhs[i].getTahunmasuk() << endl << endl;
+                    cout << "\tTahun Masuk : " << recMhs[i].getTahunmasuk() << endl;
+                    cout << "\tSemester ke : " << recMhs[i].getSemester() << endl;
+                    cout << "\tSKS lulus   : " << recMhs[i].getSKSLulus() << endl;
+                    cout << "\tIPK         : " << recMhs[i].getIPK() << endl;
+                    if(tunjukinIPS == 'y' || tunjukinIPS == 'Y'){
+                        cout << "rincian IPS :\n";
+                        for(int j = 1; j < recMhs[i].getSemester(); j++){
+                            cout << "\tsem" << j;
+                        }
+                        cout << endl;
+                        for(int j = 1; j < recMhs[i].getSemester(); j++){
+                            cout << "\t" << recMhs[i].getIPS(j);
+                        }
+                        cout << endl;
+                    }
                 }
-                cin.get();
-                cin.get();
+                cout << endl;
+                // cout << "tekan enter untuk melanjutkan";
+                // cin.get();
+                // cin.get();
             }   break;
 
 			case 5:{
+                system("clear");
                 for(int i = 0; i < idDosen; i++){
                     cout << i+1 << ". data dosen dengan id: " << recDosen[i].getId() << endl;
                     cout << "\tNama        : " << recDosen[i].getNama() << endl;
@@ -134,11 +179,13 @@ int main()
                     cout << "\tDepartemen  : " << recDosen[i].getDepartemen() << endl;
                     cout << "\tPendidikan  : " << recDosen[i].getPendidikan() << endl << endl;
                 }
-                cin.get();
-                cin.get();
+                // cout << "tekan enter untuk melanjutkan";
+                // cin.get();
+                // cin.get();
             }   break;
 
 			case 6:{
+                system("clear");
                 for(int i = 0; i < idTendik; i++){
                     cout << i+1 << ". data tendik dengan id: " << recTendik[i].getId() << endl;
                     cout << "\tNama        : " << recTendik[i].getNama() << endl;
@@ -146,8 +193,9 @@ int main()
                     cout << "\tNPP         : " << recTendik[i].getNPP() << endl;
                     cout << "\tUnit        : " << recTendik[i].getUnit() << endl << endl;
                 }
-                cin.get();
-                cin.get();
+                // cout << "tekan enter untuk melanjutkan";
+                // cin.get();
+                // cin.get();
             }   break;
 		}
         label:
@@ -166,18 +214,3 @@ int main()
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-                // cout << "no.\tid\tNRP\t\tNama\t\t\tDepartemen\tdd/mm/yy\ttahun masuk" << endl;
-                // for(int i = 0; i < idMhs; i++){
-                //     cout << i+1 << "\t" << recMhs[i].getId() << "\t" << recMhs[i].getNRP() << "\t";
-                //     cout << recMhs[i].getNama() << "\t\t\t" << recMhs[i].getDepartemen() << "\t" << recMhs[i].getTglLahir();
-                //     cout << "/" << recMhs[i].getBulanLahir() << "/" << recMhs[i].getTahunLahir() << "\t" << recMhs[i].getTahunmasuk() << endl;
-                // }

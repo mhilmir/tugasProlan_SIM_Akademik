@@ -39,6 +39,8 @@ public:
 	void setIPS(int semester, float ips);
 	float getIPS(int semester);
 	std::vector<float> getAllIPS();
+
+    float getIPK();
 };
 
 #endif
