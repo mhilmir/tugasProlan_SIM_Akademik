@@ -14,58 +14,47 @@ mahasiswa::mahasiswa(std::string id, std::string nama, int dd, int mm, int yy,
 	this->ips = std::vector<float>(14,0);
 }
 
-void mahasiswa::setNRP(std::string nrp)
-{
+// inisialisasi fungsi yang saya buat ///////////////////////////////////////
+void mahasiswa::setNRP(std::string nrp){
     this->nrp = nrp;
 }
-
-std::string mahasiswa::getNRP()
-{
+std::string mahasiswa::getNRP(){
     return this->nrp;
 }
-
-void mahasiswa::setDepartemen(std::string departemen)
-{
+void mahasiswa::setDepartemen(std::string departemen){
     this->departemen = departemen;
 }
-
-std::string mahasiswa::getDepartemen()
-{
+std::string mahasiswa::getDepartemen(){
     return this->departemen;
 }
-
-void mahasiswa::setTahunmasuk(int tahunmasuk)
-{
+void mahasiswa::setTahunmasuk(int tahunmasuk){
     this->tahunmasuk = tahunmasuk;
 }
-
-int mahasiswa::getTahunmasuk()
-{
+int mahasiswa::getTahunmasuk(){
     return this->tahunmasuk;
 }
+float mahasiswa::getIPK(){
+    return this->ipk;
+}
+/////////////////////////////////////////////////////////////////////////////
 
-void mahasiswa::setSemester(int semesterke)
-{
+void mahasiswa::setSemester(int semesterke){
 	this->semesterke = semesterke;
 }
 
-int mahasiswa::getSemester()
-{
+int mahasiswa::getSemester(){
 	return this->semesterke;
 }
 
-void mahasiswa::setSKSLulus(int skslulus)
-{
+void mahasiswa::setSKSLulus(int skslulus){
 	this->skslulus = skslulus;
 }
 
-int mahasiswa::getSKSLulus()
-{
+int mahasiswa::getSKSLulus(){
 	return this->skslulus;
 }
 
-void mahasiswa::hitungIPK()
-{
+void mahasiswa::hitungIPK(){
     float total = 0;
     for(long unsigned int i = 0; i < ips.size(); i++){
         total += ips[i];
@@ -74,8 +63,7 @@ void mahasiswa::hitungIPK()
     this->ipk = total;
 }
 
-void mahasiswa::setIPS(int semester, float ips)
-{
+void mahasiswa::setIPS(int semester, float ips){
 	// semester mulai dari 1
 	if (semester < 15) {
 		this->ips[semester-1] = ips;
@@ -83,21 +71,13 @@ void mahasiswa::setIPS(int semester, float ips)
 	}
 }
 
-float mahasiswa::getIPS(int semester)
-{
+float mahasiswa::getIPS(int semester){
 	if (semester < 15)
 		return this->ips[semester-1];
 
 	return -1.0;
 }
 
-std::vector<float> mahasiswa::getAllIPS()
-{
+std::vector<float> mahasiswa::getAllIPS(){
 	return this->ips;
 }
-
-float mahasiswa::getIPK()
-{
-    return this->ipk;
-}
-

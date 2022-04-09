@@ -8,21 +8,22 @@
 
 using namespace std;
 
-int main()
-{
+int main(){
 	vector<mahasiswa> recMhs;
 	vector<dosen> recDosen;
 	vector<tendik> recTendik;
 
+    // untuk pilihan user
 	int menu_terpilih;
+    char lanjutKah, tunjukinIPS;
+    // untuk memberi id pada tiap person
     int idMhs = 0;
     int idDosen = 0;
     int idTendik = 0;
-    char lanjutKah, tunjukinIPS;
 
-	while(1) {
+	while(1){
         system("clear");
-		cout << "Selamat datang di Universitas X" << endl << endl;
+		cout << "Selamat datang di Universitas Laros Jenggirat Tangi" << endl << endl;
 		cout << "Data statistik:" << endl;
 		cout << "  1. Jumlah Mahasiswa             : " << recMhs.size() << " mahasiswa" << endl;
 		cout << "  2. Jumlah Dosen                 : " << recDosen.size() << " mahasiswa" << endl;
@@ -38,15 +39,17 @@ int main()
 		cout << "-> Silahkan memilih salah satu: ";
 		cin >> menu_terpilih;
 
-		switch (menu_terpilih) {
+		switch(menu_terpilih){
 			case 1:{
                 idMhs++;
-                string id, nama, nrp, departemen, stringIPS;
+                string id, nama, nrp, departemen;
                 int dd, mm, yy, tahunmasuk, semesterke, skslulus;
-                float ips_container;
+                float ips_temp;  // menampung ips sementara sebelum di push_back ke vector ips
                 vector <float> ips;
-                id = "mhs" + to_string(idMhs);
+                // membersihkan layar konsol
                 system("clear");
+                // mengambil input
+                id = "mhs" + to_string(idMhs);
                 cout << "masukkan nama mahasiswa : ";
                 cin.ignore();
                 getline(cin, nama);
@@ -69,24 +72,28 @@ int main()
                 cin >> skslulus;
                 for(int i = 1 ; i < semesterke; i++){
                     cout << "masukkan ips semester ke-" << i << " : ";
-                    cin >> ips_container;
-                    ips.push_back(ips_container);
+                    cin >> ips_temp;
+                    ips.push_back(ips_temp);
                 }
+                // assign inputan ke object penampung bernama inputMhs
                 mahasiswa inputMhs = mahasiswa(id, nama, dd, mm, yy, nrp, departemen, tahunmasuk);
                 inputMhs.setSemester(semesterke);
                 inputMhs.setSKSLulus(skslulus);
                 for(int i = 1; i < semesterke; i++){
                     inputMhs.setIPS(i, ips[i-1]);
                 }
+                // push_back inputMhs ke vector recMhs sebagai database
                 recMhs.push_back(inputMhs);
-            }   break;
+            } break;
 
 			case 2:{
                 idDosen++;
                 string id, nama, npp, departemen, pendidikan;
                 int dd, mm, yy;
-                id = "dsn" + to_string(idDosen);
+                // membersihkan layar konsol
                 system("clear");
+                // mengambil input
+                id = "dsn" + to_string(idDosen);
                 cout << "masukkan nama dosen : ";
                 cin.ignore();
                 getline(cin, nama);
@@ -102,18 +109,21 @@ int main()
                 cin.ignore();
                 getline(cin, departemen);
                 cout << "masukkan pendidikan : ";
-                // cin.ignore();
                 getline(cin, pendidikan);
+                // assign inputan ke object penampung bernama inputDosen
                 dosen inputDosen = dosen(id, nama, dd, mm, yy, npp, departemen, pendidikan);
+                // push_back inputDosen ke vector recDosen sebagai database
                 recDosen.push_back(inputDosen);
-            }   break;
+            } break;
 
 			case 3:{
                 idTendik++;
                 string id, nama, npp, unit;
                 int dd, mm, yy;
-                id = "tdk" + to_string(idTendik);
+                // membersihkan layar konsol
                 system("clear");
+                // mengambil input
+                id = "tdk" + to_string(idTendik);
                 cout << "masukkan nama tendik : ";
                 cin.ignore();
                 getline(cin, nama);
@@ -123,17 +133,21 @@ int main()
                 cin >> mm;
                 cout << "masukkan tahun lahir : ";
                 cin >> yy;
-                cout << "masukkan nrp : ";
+                cout << "masukkan npp : ";
                 cin >> npp;
                 cout << "masukkan unit : ";
                 cin.ignore();
                 getline(cin, unit);
+                // assign inputan ke object penampung bernama inputTendik
                 tendik inputTendik = tendik(id, nama, dd, mm, yy, npp, unit);
+                // push_back inputTendik ke vector recTendik sebagai database
                 recTendik.push_back(inputTendik);
-            }   break;
+            } break;
 
 			case 4:{
+                // membersihkan layar konsol
                 system("clear");
+                // pilihan buat nunjukin detail ips atau tidak
                 label2:
                 cout << "apakah anda ingin melihat rincian ip per semester (IPS) juga (y/n): ";
                 cin >> tunjukinIPS;
@@ -141,6 +155,7 @@ int main()
                     cout << "input salah" << endl;
                     goto label2;
                 }
+                // menampilkan data
                 for(int i = 0; i < idMhs; i++){
                     cout << i+1 << ". data mahasiswa dengan id: " << recMhs[i].getId() << endl;
                     cout << "\tNama        : " << recMhs[i].getNama() << endl;
@@ -150,9 +165,10 @@ int main()
                     cout << "\tTahun Masuk : " << recMhs[i].getTahunmasuk() << endl;
                     cout << "\tSemester ke : " << recMhs[i].getSemester() << endl;
                     cout << "\tSKS lulus   : " << recMhs[i].getSKSLulus() << endl;
-                    cout << "\tIPK         : " << recMhs[i].getIPK() << endl;
+                    printf ("\tIPK         : %.2f\n", recMhs[i].getIPK());
+                    // menampilkan detail ips
                     if(tunjukinIPS == 'y' || tunjukinIPS == 'Y'){
-                        cout << "rincian IPS :\n";
+                        cout << "   rincian IPS :\n";
                         for(int j = 1; j < recMhs[i].getSemester(); j++){
                             cout << "\tsem" << j;
                         }
@@ -162,15 +178,14 @@ int main()
                         }
                         cout << endl;
                     }
+                    cout << endl;
                 }
-                cout << endl;
-                // cout << "tekan enter untuk melanjutkan";
-                // cin.get();
-                // cin.get();
-            }   break;
+            } break;
 
 			case 5:{
+                // membersihkan layar konsol
                 system("clear");
+                // menampilkan data
                 for(int i = 0; i < idDosen; i++){
                     cout << i+1 << ". data dosen dengan id: " << recDosen[i].getId() << endl;
                     cout << "\tNama        : " << recDosen[i].getNama() << endl;
@@ -179,13 +194,12 @@ int main()
                     cout << "\tDepartemen  : " << recDosen[i].getDepartemen() << endl;
                     cout << "\tPendidikan  : " << recDosen[i].getPendidikan() << endl << endl;
                 }
-                // cout << "tekan enter untuk melanjutkan";
-                // cin.get();
-                // cin.get();
-            }   break;
+            } break;
 
 			case 6:{
+                // membersihkan layar konsol
                 system("clear");
+                // menampilkan data
                 for(int i = 0; i < idTendik; i++){
                     cout << i+1 << ". data tendik dengan id: " << recTendik[i].getId() << endl;
                     cout << "\tNama        : " << recTendik[i].getNama() << endl;
@@ -193,11 +207,9 @@ int main()
                     cout << "\tNPP         : " << recTendik[i].getNPP() << endl;
                     cout << "\tUnit        : " << recTendik[i].getUnit() << endl << endl;
                 }
-                // cout << "tekan enter untuk melanjutkan";
-                // cin.get();
-                // cin.get();
-            }   break;
+            } break;
 		}
+        // pilihan untuk menjalankan program lagi atau tidak
         label:
         cout << "apakah anda ingin menjalankan program lagi (y/n) : ";
         cin >> lanjutKah;
@@ -209,8 +221,6 @@ int main()
             cout << "input salah" << endl;
             goto label;
         }
-        // i++;
 	}
-
 	return 0;
 }
