@@ -321,9 +321,9 @@ int main(){
 
                 // assign dosen ke matkul
                 dataMhs temp;
-                temp.nama = recDosen[indexMhs].getNama();
-                temp.nrp = recDosen[indexMhs].getNPP();
-                temp.departemen = recDosen[indexMhs].getDepartemen();
+                temp.nama = recMhs[indexMhs].getNama();
+                temp.nrp = recMhs[indexMhs].getNRP();
+                temp.departemen = recMhs[indexMhs].getDepartemen();
                 recMatkul[indexMatkul].fillDatabaseMhs(temp);   
             } break;
 

@@ -6,11 +6,11 @@ Matkul::Matkul(std::string id, std::string nama, int sks)
         : id(id), nama_matkul(nama), beban_sks(sks) {}
 
 void Matkul::fillDatabaseMhs(dataMhs inputData){
-    databaseMhs.push_back(inputData);
+    this->databaseMhs.push_back(inputData);
 }
 
 void Matkul::fillDatabaseDsn(dataDsn inputData){
-    databaseDsn.push_back(inputData);
+    this->databaseDsn.push_back(inputData);
 }
 
 std::string Matkul::getId(){
