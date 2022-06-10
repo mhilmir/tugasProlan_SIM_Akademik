@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "include/person.hpp"
 #include "include/mahasiswa.hpp"
@@ -9,6 +10,8 @@
 
 using namespace std;
 
+template <typename T> int cariNamadiDatabase(T &rec, string nama);
+
 int main(){
 	vector<Mahasiswa> recMhs;
 	vector<Dosen> recDosen;
@@ -17,7 +20,8 @@ int main(){
 
     // untuk pilihan user
 	int menu_terpilih;
-    char lanjutKah, tunjukinIPS, tunjukinDatabase;
+    char lanjutKah;
+    // char lanjutKah, tunjukinIPS, tunjukinDatabase;
     // untuk memberi id pada tiap person
     int idMhs = 0;
     int idDosen = 0;
@@ -28,10 +32,10 @@ int main(){
         system("clear");
 		cout << "Selamat datang di Universitas Laros Jenggirat Tangi" << endl << endl;
 		cout << "Data statistik:" << endl;
-		cout << "  1. Jumlah Mahasiswa             : " << recMhs.size() << " mahasiswa" << endl;
-		cout << "  2. Jumlah Dosen                 : " << recDosen.size() << " dosen" << endl;
-		cout << "  3. Jumlah Tenaga Kependidikan   : " << recTendik.size() << " tenaga kependidikan" << endl;
-		cout << "  4. Jumlah Mata Kuliah           : " << recMatkul.size() << " mata kuliah" << endl;
+		cout << "  => Jumlah Mahasiswa             : " << recMhs.size() << " mahasiswa" << endl;
+		cout << "  => Jumlah Dosen                 : " << recDosen.size() << " dosen" << endl;
+		cout << "  => Jumlah Tenaga Kependidikan   : " << recTendik.size() << " tenaga kependidikan" << endl;
+		cout << "  => Jumlah Mata Kuliah           : " << recMatkul.size() << " mata kuliah" << endl;
 		cout << endl;
 		cout << "Menu: " << endl;
 		cout << "  1. Tambah Mahasiswa" << endl;
@@ -41,8 +45,9 @@ int main(){
 		cout << "  5. Tampilkan semua Dosen" << endl;
 		cout << "  6. Tampilkan semua Tenaga Kependidikan" << endl;
         cout << "  7. Tambah Mata Kuliah" << endl;
-        cout << "  8. Tambah Mahasiswa ke Mata Kuliah" << endl;
-        cout << "  9. Tampilkan semua Mata Kuliah" << endl;
+        cout << "  8. Tambah Dosen ke Mata Kuliah" << endl;
+        cout << "  9. Tambah Mahasiswa ke Mata Kuliah" << endl;
+        cout << "  10. Tampilkan semua Mata Kuliah" << endl;
 		cout << "-> Silahkan memilih salah satu: ";
 		cin >> menu_terpilih;
 
@@ -75,11 +80,13 @@ int main(){
                 cin >> tahunmasuk;
                 cout << "masukkan semester ke berapa sekarang : ";
                 cin >> semesterke;
-                cout << "masukkan jumlah sks lulus : ";
-                cin >> skslulus;
+                if(semesterke > 1){
+                    cout << "masukkan jumlah sks lulus : ";
+                    cin >> skslulus;
+                }
                 for(int i = 1 ; i < semesterke; i++){
                     cout << "masukkan ips semester ke-" << i << " : ";
-                    cin >> ips_temp;
+                    cin >> ips_temp; cin.ignore();
                     ips.push_back(ips_temp);
                 }
                 // assign inputan ke object penampung bernama inputMhs
@@ -152,6 +159,7 @@ int main(){
             } break;
 
 			case 4:{
+                char tunjukinIPS;
                 // membersihkan layar konsol
                 system("clear");
                 // pilihan buat nunjukin detail ips atau tidak
@@ -248,6 +256,81 @@ int main(){
             case 8:{
                 // membersihkan layar konsol
                 system("clear");
+
+                // mengambil input data dosen yang ingin didaftarkan ke matkul
+                int indexDosen, indexMatkul;
+                string nama;
+                cout << "Tuliskan nama lengkap dosen yang ingin ditambahkan : ";
+                cin.ignore();
+                getline(cin, nama);
+
+                // mencari nama dosen di database
+                indexDosen = cariNamadiDatabase(recDosen, nama);
+                if(indexDosen == -1){
+                    cout << "nama tersebut tidak ditemukan" << endl;
+                    break;
+                }
+                // mengambil input data matkul
+                nama.clear();
+                cout << "Tuliskan nama matkulnya : ";
+                getline(cin, nama);
+
+                // mencari nama matkul di database
+                indexMatkul = cariNamadiDatabase(recMatkul, nama);
+                if(indexMatkul == -1){
+                    cout << "matkul tersebut tidak ditemukan" << endl;
+                    break;
+                }
+
+                // assign dosen ke matkul
+                dataDsn temp;
+                temp.nama = recDosen[indexDosen].getNama();
+                temp.npp = recDosen[indexDosen].getNPP();
+                temp.departemen = recDosen[indexDosen].getDepartemen();
+                recMatkul[indexMatkul].fillDatabaseDsn(temp);
+            } break;
+
+            case 9:{
+                // membersihkan layar konsol
+                system("clear");
+
+                // mengambil input data mahasiswa yang ingin didaftarkan ke matkul
+                int indexMhs, indexMatkul;
+                string nama;
+                cout << "Tuliskan nama lengkap mahasiswa yang ingin ditambahkan : ";
+                cin.ignore();
+                getline(cin, nama);
+
+                // mencari nama mahasiswa di database
+                indexMhs = cariNamadiDatabase(recMhs, nama);
+                if(indexMhs == -1){
+                    cout << "nama tersebut tidak ditemukan" << endl;
+                    break;
+                }
+                // mengambil input data matkul
+                nama.clear();
+                cout << "Tuliskan nama matkulnya : ";
+                getline(cin, nama);
+
+                // mencari nama matkul di database
+                indexMatkul = cariNamadiDatabase(recMatkul, nama);
+                if(indexMatkul == -1){
+                    cout << "matkul tersebut tidak ditemukan" << endl;
+                    break;
+                }
+
+                // assign dosen ke matkul
+                dataMhs temp;
+                temp.nama = recDosen[indexMhs].getNama();
+                temp.nrp = recDosen[indexMhs].getNPP();
+                temp.departemen = recDosen[indexMhs].getDepartemen();
+                recMatkul[indexMatkul].fillDatabaseMhs(temp);   
+            } break;
+
+            case 10:{
+                char tunjukinDatabase;
+                // membersihkan layar konsol
+                system("clear");
                 // pilihan untuk menampilkan mahasiswa dan dosen pada matkul terkait
                 label3:
                 cout << "apakah anda ingin melihat mahasiswa dan dosen yang terkait matkul ini ? (y/n) : ";
@@ -259,18 +342,18 @@ int main(){
                 // menampilkan data
                 for(int i = 0; i < idMatkul; i++){
                     cout << i+1 << ". data matkul dengan id: " << recMatkul[i].getId() << endl;
-                    cout << "\t Nama Matkul : " << recMatkul[i].getNamaMatkul() << endl;
+                    cout << "\t Nama Matkul : " << recMatkul[i].getNama() << endl;
                     cout << "\t Beban SKS   : " << recMatkul[i].getBebanSKS() << endl;
                     if(tunjukinDatabase == 'y' || tunjukinDatabase == 'Y'){
                         // menunjukkan database dosen
-                        cout << "\t Data Dosen pada Matkul " << recMatkul[i].getNamaMatkul() << " :\n";
+                        cout << "\t Data Dosen pada Matkul " << recMatkul[i].getNama() << " :\n";
                         for(int j = 0; j < recMatkul[i].getDatabaseDsn().size(); j++){
                             cout << "\t\t " << j+1 << ". " << (recMatkul[i].getDatabaseDsn())[j].nama;
                             cout << " (" << (recMatkul[i].getDatabaseDsn())[j].npp << ") - ";
                             cout << (recMatkul[i].getDatabaseDsn())[j].departemen << endl;
                         }
                         // menunjukkan database mahasiswa
-                        cout << "\t Data Mahasiswa pada Matkul " << recMatkul[i].getNamaMatkul() << " :\n";
+                        cout << "\t Data Mahasiswa pada Matkul " << recMatkul[i].getNama() << " :\n";
                         for(int j = 0; j < recMatkul[i].getDatabaseMhs().size(); j++){
                             cout << "\t\t " << j+1 << ". " << (recMatkul[i].getDatabaseMhs())[j].nama;
                             cout << " (" << (recMatkul[i].getDatabaseMhs())[j].nrp << ") - ";
@@ -279,13 +362,7 @@ int main(){
                     }
                     cout << endl;
                 }
-            } break;
-
-            case 9:{
-                // membersihkan layar konsol
-                system("clear");
-                
-            } break;
+            }break;
 
             default:
                 cout << "input anda salah" << endl;
@@ -305,4 +382,26 @@ int main(){
         }
 	}
 	return 0;
+}
+
+template <typename T> int cariNamadiDatabase(T &rec, string inputNama){
+    string inputNama_lowerCase, inputNama_upperCase, nama_lowerCase, nama_upperCase;
+
+    inputNama_lowerCase = inputNama;
+    transform(inputNama_lowerCase.begin(), inputNama_lowerCase.end(), inputNama_lowerCase.begin(), ::tolower);
+    inputNama_upperCase = inputNama;
+    transform(inputNama_upperCase.begin(), inputNama_upperCase.end(), inputNama_upperCase.begin(), ::toupper);
+
+    for(int i = 0; i < rec.size(); i++){
+
+        nama_lowerCase = rec[i].getNama();
+        transform(nama_lowerCase.begin(), nama_lowerCase.end(), nama_lowerCase.begin(), ::tolower);
+        nama_upperCase = rec[i].getNama();
+        transform(nama_upperCase.begin(), nama_upperCase.end(), nama_upperCase.begin(), ::toupper);
+
+        if((nama_lowerCase == inputNama_lowerCase) || (nama_upperCase == inputNama_upperCase)){
+            return i;
+        }
+    }
+    return -1;
 }

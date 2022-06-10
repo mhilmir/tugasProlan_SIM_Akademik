@@ -30,7 +30,7 @@ public:
     void fillDatabaseMhs(dataMhs inputData);
     void fillDatabaseDsn(dataDsn inputData);
     std::string getId();
-    std::string getNamaMatkul();
+    std::string getNama();
     int getBebanSKS();
     std::vector<dataDsn> getDatabaseDsn();
     std::vector<dataMhs> getDatabaseMhs();

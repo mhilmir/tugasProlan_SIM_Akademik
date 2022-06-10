@@ -17,7 +17,7 @@ std::string Matkul::getId(){
     return this->id;
 }
 
-std::string Matkul::getNamaMatkul(){
+std::string Matkul::getNama(){
     return this->nama_matkul;
 }
 
