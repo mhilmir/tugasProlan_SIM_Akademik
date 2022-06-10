@@ -3,9 +3,10 @@
 
 
 #include <iostream>
+#include <vector>
 #include "include/person.hpp"
 
-class mahasiswa : public person {
+class Mahasiswa : public Person {
 private:
 	std::string nrp;
 	std::string departemen;
@@ -14,9 +15,11 @@ private:
 	int skslulus;
 	float ipk;
 	std::vector<float> ips;
+    int sksTempuhSemesterIni;
+    std::vector <std::string> daftarMatkul;
 
 public:
-	mahasiswa(std::string id, std::string nama, int dd, int mm, int yy,
+	Mahasiswa(std::string id, std::string nama, int dd, int mm, int yy,
 					std::string nrp, std::string departemen, int tahunmasuk);
 
     // membuat fungsi untuk akses nrp
@@ -44,6 +47,9 @@ public:
 	float getIPS(int semester);
 	std::vector<float> getAllIPS();
 
+    int getSKSTempuh();
+    void tambahMatkul(std::string matkul, int sks);
+    void printDaftarMatkul();
 };
 
 #endif

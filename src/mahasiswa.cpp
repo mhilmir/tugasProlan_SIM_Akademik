@@ -3,58 +3,60 @@
 #include "include/mahasiswa.hpp"
 
 
-mahasiswa::mahasiswa(std::string id, std::string nama, int dd, int mm, int yy, 
+Mahasiswa::Mahasiswa(std::string id, std::string nama, int dd, int mm, int yy, 
 				std::string nrp, std::string departemen, int tahunmasuk)
-		: person(id, nama, dd, mm, yy), nrp(nrp), departemen(departemen), tahunmasuk(tahunmasuk)
+		: Person(id, nama, dd, mm, yy), nrp(nrp), departemen(departemen), tahunmasuk(tahunmasuk)
 {
 	this->ipk = 0.0;
 	this->semesterke = 1;
 	this->skslulus = 0;
 
 	this->ips = std::vector<float>(14,0);
+
+    this->sksTempuhSemesterIni = 0;
 }
 
 // inisialisasi fungsi yang saya buat ///////////////////////////////////////
-void mahasiswa::setNRP(std::string nrp){
+void Mahasiswa::setNRP(std::string nrp){
     this->nrp = nrp;
 }
-std::string mahasiswa::getNRP(){
+std::string Mahasiswa::getNRP(){
     return this->nrp;
 }
-void mahasiswa::setDepartemen(std::string departemen){
+void Mahasiswa::setDepartemen(std::string departemen){
     this->departemen = departemen;
 }
-std::string mahasiswa::getDepartemen(){
+std::string Mahasiswa::getDepartemen(){
     return this->departemen;
 }
-void mahasiswa::setTahunmasuk(int tahunmasuk){
+void Mahasiswa::setTahunmasuk(int tahunmasuk){
     this->tahunmasuk = tahunmasuk;
 }
-int mahasiswa::getTahunmasuk(){
+int Mahasiswa::getTahunmasuk(){
     return this->tahunmasuk;
 }
-float mahasiswa::getIPK(){
+float Mahasiswa::getIPK(){
     return this->ipk;
 }
 /////////////////////////////////////////////////////////////////////////////
 
-void mahasiswa::setSemester(int semesterke){
+void Mahasiswa::setSemester(int semesterke){
 	this->semesterke = semesterke;
 }
 
-int mahasiswa::getSemester(){
+int Mahasiswa::getSemester(){
 	return this->semesterke;
 }
 
-void mahasiswa::setSKSLulus(int skslulus){
+void Mahasiswa::setSKSLulus(int skslulus){
 	this->skslulus = skslulus;
 }
 
-int mahasiswa::getSKSLulus(){
+int Mahasiswa::getSKSLulus(){
 	return this->skslulus;
 }
 
-void mahasiswa::hitungIPK(){
+void Mahasiswa::hitungIPK(){
     float total = 0;
     for(long unsigned int i = 0; i < ips.size(); i++){
         total += ips[i];
@@ -63,7 +65,7 @@ void mahasiswa::hitungIPK(){
     this->ipk = total;
 }
 
-void mahasiswa::setIPS(int semester, float ips){
+void Mahasiswa::setIPS(int semester, float ips){
 	// semester mulai dari 1
 	if (semester < 15) {
 		this->ips[semester-1] = ips;
@@ -71,13 +73,35 @@ void mahasiswa::setIPS(int semester, float ips){
 	}
 }
 
-float mahasiswa::getIPS(int semester){
+float Mahasiswa::getIPS(int semester){
 	if (semester < 15)
 		return this->ips[semester-1];
 
 	return -1.0;
 }
 
-std::vector<float> mahasiswa::getAllIPS(){
+std::vector<float> Mahasiswa::getAllIPS(){
 	return this->ips;
+}
+
+int Mahasiswa::getSKSTempuh(){
+    return this->sksTempuhSemesterIni;
+}
+
+void Mahasiswa::tambahMatkul(std::string matkul, int sks){
+    if((this->sksTempuhSemesterIni + sks) > 24){
+        std::cout << "error, sks melebih batas maksimal" << std::endl;
+    } else{
+        this->sksTempuhSemesterIni += sks;
+        this->daftarMatkul.push_back(matkul + " (" + std::to_string(sks) + " sks)");
+    }
+}
+
+void Mahasiswa::printDaftarMatkul(){
+    for(int i = 0; i < this->daftarMatkul.size(); i++){
+        std::cout << this->daftarMatkul[i];
+        if(i != (this->daftarMatkul.size()-1)){
+            std::cout << ", ";
+        }
+    }
 }

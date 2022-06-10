@@ -4,14 +4,14 @@
 #include <iostream>
 #include "include/person.hpp"
 
-class dosen : public person {
+class Dosen : public Person {
 private:
 	std::string npp;
 	std::string departemen;
 	std::string pendidikan;
 
 public:
-	dosen(std::string id, std::string nama, int dd, int mm, int yy, std::string npp, std::string departemen, std::string pendidikan);
+	Dosen(std::string id, std::string nama, int dd, int mm, int yy, std::string npp, std::string departemen, std::string pendidikan);
 
     // menambahkan fungsi buat akses npp
     void setNPP(std::string npp);

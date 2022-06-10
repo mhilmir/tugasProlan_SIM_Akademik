@@ -2,17 +2,17 @@
 #include "include/tendik.hpp"
 
 
-tendik::tendik(std::string id, std::string nama, int dd, int mm, int yy, std::string npp, std::string unit)
-		: person(id, nama, dd, mm, yy), npp(npp), unit(unit) {}
+Tendik::Tendik(std::string id, std::string nama, int dd, int mm, int yy, std::string npp, std::string unit)
+		: Person(id, nama, dd, mm, yy), npp(npp), unit(unit) {}
 
-void tendik::setUnit(std::string unit){
+void Tendik::setUnit(std::string unit){
 	this->unit = unit;
 }
 
-std::string tendik::getUnit(){
+std::string Tendik::getUnit(){
 	return this->unit;
 }
 
-std::string tendik::getNPP(){
+std::string Tendik::getNPP(){
 	return this->npp;
 }

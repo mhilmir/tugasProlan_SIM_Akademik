@@ -3,14 +3,14 @@
 
 #include <iostream>
 
-class person {
+class Person {
 private:
 	std::string id;
 	std::string nama;
 	int dd, mm, yy;
 
 public:
-	person(std::string id, std::string nama, int dd, int mm, int yy);
+	Person(std::string id, std::string nama, int dd, int mm, int yy);
 
 	void setId(std::string id);
 	std::string getId();
