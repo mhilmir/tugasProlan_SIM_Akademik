@@ -89,12 +89,8 @@ int Mahasiswa::getSKSTempuh(){
 }
 
 void Mahasiswa::tambahMatkul(std::string matkul, int sks){
-    if((this->sksTempuhSemesterIni + sks) > 24){
-        std::cout << "error, sks melebih batas maksimal" << std::endl;
-    } else{
-        this->sksTempuhSemesterIni += sks;
-        this->daftarMatkul.push_back(matkul + " (" + std::to_string(sks) + " sks)");
-    }
+    this->sksTempuhSemesterIni += sks;
+    this->daftarMatkul.push_back(matkul + " (" + std::to_string(sks) + " sks)");
 }
 
 void Mahasiswa::printDaftarMatkul(){

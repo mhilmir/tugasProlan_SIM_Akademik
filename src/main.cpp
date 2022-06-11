@@ -50,6 +50,9 @@ int main(){
         cout << "  10. Tampilkan semua Mata Kuliah" << endl;
 		cout << "-> Silahkan memilih salah satu: ";
 		cin >> menu_terpilih;
+        if(cin.fail()){
+            cin.clear(); cin.ignore(); cin.ignore();
+        }
 
 		switch(menu_terpilih){
 			case 1:{
@@ -191,7 +194,7 @@ int main(){
                         for(int j = 1; j < recMhs[i].getSemester(); j++){
                             cout << "\t" << recMhs[i].getIPS(j);
                         }
-                        cout << endl;
+                        cout << endl << endl;
                     }
                     // menampilkan matkul dan sks semester ini
                     cout << "\tSKS Tempuh Semester ini : ";
@@ -199,9 +202,10 @@ int main(){
                         cout << "belum menempuh sks di semester ini" << endl;
                     } else{
                         cout << recMhs[i].getSKSTempuh() << endl;
+                        cout << "\tantara lain: ";
+                        recMhs[i].printDaftarMatkul();
                     }
-                    recMhs[i].printDaftarMatkul();
-                    cout << endl;
+                    cout << endl << endl;
                 }
             } break;
 
@@ -317,6 +321,14 @@ int main(){
                 if(indexMatkul == -1){
                     cout << "matkul tersebut tidak ditemukan" << endl;
                     break;
+                }
+
+                // assign bobot sks ke attribute sks mahasiswa
+                if((recMhs[indexMhs].getSKSTempuh() + recMatkul[indexMatkul].getBebanSKS()) > 24){  // sks tempuh tidak boleh lebih dari 24
+                    cout << "error!!! sks tempuh mahasiswa sudah mencapai batas maksimal" << endl;
+                    break;
+                } else{
+                    recMhs[indexMhs].tambahMatkul(recMatkul[indexMatkul].getNama(), recMatkul[indexMatkul].getBebanSKS());
                 }
 
                 // assign dosen ke matkul
